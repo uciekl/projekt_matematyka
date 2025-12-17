@@ -12,6 +12,8 @@ git clone https://github.com/uciekl/projekt_matematyka.git
 
 Skrypt można uruchomić tylko wtedy, gdy w terminalu (cmd) znajdujemy się w katalogu zawierającym skrypt, dlatego należy sprawdzić ścieżkę projektu i skierować się do niego za pomocą komendy cd - change directory. Domyślnie powinien zostać pobrany w folderze User, zatem należy skorzystać z komendy: cd C:\Users\(User - nazwa użytkownika komputera)\projekt_matematyka\src - w katalogu src znajduje się plik z rozszerzeniem .py zawierający kod.
 
+Konieczne jest pobranie zewnętrznych bibliotek. W katalogu projekt_matematyka znajduje się plik requirements.txt, który zawiera wykorzystane biblioteki. Aby je pobrać należy użyć komendy: pip install requirements.txt.
+
 Jeżeli znajdujemy się w katalogu src, to do uruchomienia skryptu należy użyć komendy: python projektmf.py
 Pokaże się sposób użycia kodu - ticker1 ticker2 ticker3 to wymagane symbole spółek, start_date to data, od której pobierane są dane (niewymagane, domyślnie 01.01.2025) i end_date to data, do której pobierany jest kod (niewymagane, domyślnie dzień dzisiejszy). 
 
