@@ -14,6 +14,7 @@ Skrypt można uruchomić tylko wtedy, gdy w terminalu (cmd) znajdujemy się w ka
 
 Jeżeli znajdujemy się w katalogu src, to do uruchomienia skryptu należy użyć komendy: python projektmf.py
 Pokaże się sposób użycia kodu - ticker1 ticker2 ticker3 to wymagane symbole spółek, start_date to data, od której pobierane są dane (niewymagane, domyślnie 01.01.2025) i end_date to data, do której pobierany jest kod (niewymagane, domyślnie dzień dzisiejszy). 
+
 Przykładowe użycie: python projektmf.py GOOG NVDA PYPL
 
 Wyniki są zapisywane do nowo utworzonego folderu na pulpicie - wykresy, output z terminala, plik z rozszerzeniem .xlsx
