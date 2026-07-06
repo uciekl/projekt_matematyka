@@ -1,22 +1,39 @@
-Projekt matematyka finansowa - analiza portfela Markowitza
+# Optymalizacja portfela inwestycyjnego metodą Markowitza (MPT)
 
-# Jak uruchomić skrypt?
-Wymagany jest interperter Python'a oraz system kontroli wersji - git. 
+## Opis projektu
 
-Interpreter można pobrać ze strony https://www.python.org/downloads/, natomiast git ze strony https://git-scm.com/.
+Analiza portfelowa Markowitza (MPT - Modern Portfolio Theory) to matematyczny model zarządzania portfelem inwestycyjnym. Założeniem teorii jest obliczenie odpowiedniej dywersyfikacji aktywów porfela w celu minimalizacji ryzyka i maksymalizacji zwrotów. Wynikiem analizy jest wyznaczenie tzw. granicy efektywnej (Efficient Frontier), czyli zestawu portfeli, które oferują najwyższy zwrot przy danym poziomie ryzyka. 
 
-Podczas instalacji interpretera ważne jest, aby zaznaczyć opcję automatycznego dodania ścieżki pythona do zmiennej środowiskowej PATH (kliknąć kwadracik podczas instalacji).
+## Jak działa kod?
 
-Aby pobrać kod należy w terminalu użyć komendy:
-git clone https://github.com/uciekl/projekt_matematyka.git
+Skrypt automatycznie pobiera historyczne ceny aktywów (Open, Close) dla trzech wybranych spółek z serwisu Yahoo Finance za pomocą biblioteki yfinance. Następnie stosuje algorytm okna przesuwnego (rolling window) o rozmiarze 25 dni, aby obliczyć stopy zwrotu i zidentyfikować podokres o najwyższej, skumulowanej stopie zwrotu dla całego koszyka akcji.
 
-Skrypt można uruchomić tylko wtedy, gdy w terminalu (cmd) znajdujemy się w katalogu zawierającym skrypt, dlatego należy sprawdzić ścieżkę projektu i skierować się do niego za pomocą komendy cd - change directory. Domyślnie powinien zostać pobrany w folderze User, zatem należy skorzystać z komendy: cd C:\Users\(User - nazwa użytkownika komputera)\projekt_matematyka\src - w katalogu src znajduje się plik z rozszerzeniem .py zawierający kod.
+Główny część analizy polega na optymalizacji trzech portfeli dwuskładnikowych (pary AB, AC, BC dla akcji A, B, C). Dla każdej pary skrypt kalkuluje macierz korelacji, stopy zwrotu oraz ryzyko portfela (implementowane w formie odchylenia standardowego) przy różnych proporcjach wagowych aktywów. Na tej podstawie wyznaczana jest granica efektywna dla każdej pary, pozwalająca wskazać strukturę portfela o optymalnym stosunku zysku do ryzyka.
 
-Konieczne jest pobranie zewnętrznych bibliotek. W katalogu projekt_matematyka znajduje się plik requirements.txt, który zawiera wykorzystane biblioteki. Aby je pobrać należy użyć komendy: pip install requirements.txt.
+Wyniki działania skryptu są automatycznie zapisywane do dedykowanego katalogu na pulpicie i obejmują:
 
-Jeżeli znajdujemy się w katalogu src, to do uruchomienia skryptu należy użyć komendy: python projektmf.py
-Pokaże się sposób użycia kodu - ticker1 ticker2 ticker3 to wymagane symbole spółek, start_date to data, od której pobierane są dane (niewymagane, domyślnie 01.01.2025) i end_date to data, do której pobierany jest kod (niewymagane, domyślnie dzień dzisiejszy). 
+- Wizualizacje: 4 wykresy przedstawiające granice efektywne (trzy wykresy indywidualne dla każdej pary oraz jeden wykres zbiorczy, porównujący wszystkie pary na jednej przestrzeni).
+- Raport tekstowy: plik zawierający tekstową analizę.
+- Dane w formacie tabelarycznym: zapisane w pliku z rozszerzeniem .xlsx (Excel) zawierają wyniki obliczeń do dalszej pracy z danymi.
 
-Przykładowe użycie: python projektmf.py GOOG NVDA PYPL
+## Obsługa skryptu
 
-Wyniki są zapisywane do nowo utworzonego folderu na pulpicie - wykresy, output z terminala, plik z rozszerzeniem .xlsx
+Skrypt przyjmuje 5 argumentów. Pierwsze 3 dotyczą tickerów aktywów - wymagane. Pozostałe określają zakres czasowy, dla którego pobierane są dane giełdowe - niewymagane. Domyślnie za początek okresu skrypt uznaje 01.01.2025, a za koniec dzień dzisiejszy.
+
+Dla tickerów notowanych na warszawskiej giełdzie należy użyć suffixu .WA (np. JSW.WA). 
+
+**Wzór komendy:** 
+
+```bash
+$ python3 MarkowitzMPT.py ticker1 ticker2 ticker3 start_date(opcjonalne, domyślnie 2025-01-01) end_date(opcjonalne, domyślnie dzień dzisiejszy)
+```
+
+**Podstawowe użycie:**
+```bash
+$ python3 MarkowitzMPT.py WMT NEM GLD
+```
+
+**Wykorzystanie indywidualnych dat:**
+```bash
+$ python3 MarkowitzMPT.py WMT NEM GLD "2022-03-01" "2023-05-05"
+```
